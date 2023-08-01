@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using StarterAssets;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class ThirdPersonShooterController : MonoBehaviour
 {
@@ -20,6 +23,9 @@ public class ThirdPersonShooterController : MonoBehaviour
     public Weapon weapon;
     public AimConstraint aimConstraint;
     private bool isReloading;
+    public Canvas weaponCanvas;
+    public TMP_Text bulletsText;
+    public Image reloadingSlide;
 
     private void Awake()
     {
@@ -57,13 +63,22 @@ public class ThirdPersonShooterController : MonoBehaviour
             ReloadingStartForShootingWeapon();
             _starterAssetsInputs.reload = false;
         }
-    }
 
+        WeaponCanvas();
+    }
     private void FixedUpdate()
     {
         ScreenCenterAiming();
         RateOfFireForShootingWeapon();
     }
+
+    private void WeaponCanvas()
+    {
+        weaponCanvas.enabled = _starterAssetsInputs.aim;
+        bulletsText.enabled = !isReloading;
+        reloadingSlide.enabled = isReloading;
+    }
+
 
     private void ScreenCenterAiming()
     {

@@ -6,9 +6,10 @@ using UnityEngine;
 public class BulletProjectile : MonoBehaviour
 {
     public float speed;
+    public float damage;
 
-    public Transform hitVFX;
-    public Transform hitVFX2;
+    public GameObject hitVFX;
+    public GameObject hitBlood;
     public Vector3 target;
     private Rigidbody rb;
     
@@ -28,17 +29,22 @@ public class BulletProjectile : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
-        // if (other.gameObject.CompareTag("Enemy"))
-        // {
-        //     Instantiate(hitVFX, transform.position, Quaternion.identity);
-        // }
-        // else
-        // {
-        //     Instantiate(hitVFX2, transform.position, Quaternion.identity);
-        // }
-        Instantiate(hitVFX, transform.position, Quaternion.identity);
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            if (other.gameObject.TryGetComponent<EnemyHealthSystem>(out EnemyHealthSystem enemyHealth))
+            {
+                enemyHealth.health -= damage;
+            }
+            
+            GameObject particle = Instantiate(hitBlood, transform.position, Quaternion.identity);
+            Destroy(particle, 1f);
+        }
+        else
+        {
+            Instantiate(hitVFX, transform.position, Quaternion.identity);
+        }
         
         Destroy(gameObject);
     }

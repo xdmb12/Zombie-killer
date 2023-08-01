@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -20,4 +22,12 @@ public class Weapon : MonoBehaviour
     [Header("Reloading")] 
     public float reloading;
     public float maxReloading;
+    
+    [Header("Canvas")]
+    public TMP_Text bulletsText;
+
+    private void Update()
+    {
+        bulletsText.text = $"{bullets}";
+    }
 }
