@@ -26,6 +26,10 @@ public class ThirdPersonShooterController : MonoBehaviour
     public Canvas weaponCanvas;
     public TMP_Text bulletsText;
     public Image reloadingSlide;
+    private Transform hitTransform;
+    public AudioClip shootSound;
+    public AudioSource reloadSound;
+    [Range(0, 1)] public float weaponAudioVolume;
 
     private void Awake()
     {
@@ -86,9 +90,11 @@ public class ThirdPersonShooterController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
         RaycastHit hit;
         
+        hitTransform = null;
         if(Physics.Raycast(ray, out hit, 100f, aimColliderLayerMask))
         {
             mouseWorldPosition = hit.point;
+            hitTransform = hit.transform;
         }
     }
     
@@ -102,8 +108,16 @@ public class ThirdPersonShooterController : MonoBehaviour
                 {
                     weapon.bullets--;
                     weapon.shootingSpeed = 0;
-                    weapon.particle.Play();
+                    AudioSource.PlayClipAtPoint(shootSound, weapon.shootingPoint.position, weaponAudioVolume);
 
+                    if (hitTransform != null)
+                    {
+                        if (hitTransform.TryGetComponent<EnemyHealthSystem>(out EnemyHealthSystem enemyHealth))
+                        {
+                            enemyHealth.TakeDamage(weapon.damage);
+                        }
+                    } 
+                        
                     _bullet = Instantiate(bulletPrefab, weapon.shootingPoint.position, Quaternion.LookRotation(target.position, Vector3.up), null);
                     _bullet.GetComponent<BulletProjectile>().target = mouseWorldPosition;
 
@@ -139,6 +153,7 @@ public class ThirdPersonShooterController : MonoBehaviour
     void ReloadingStartForShootingWeapon()
     {
         weapon.reloading = 0;
+        reloadSound.Play();
         isReloading = true;
     }
     

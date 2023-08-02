@@ -8,6 +8,7 @@ public class EnemyHealthSystem : MonoBehaviour
 {
     public float health;
     public float maxHealth;
+    
     public float timeToDestroy;
     private EnemyController _enemyController;
     private Animator _animator;
@@ -15,6 +16,7 @@ public class EnemyHealthSystem : MonoBehaviour
     public Rigidbody[] ragdollRigidbodies;
     public UnityEvent onDeath;
     private GameManager gm;
+    private AudioSource hitSound;
 
     private void Awake()
     {
@@ -23,24 +25,11 @@ public class EnemyHealthSystem : MonoBehaviour
         
         _animator = GetComponent<Animator>();
         _enemyController = GetComponent<EnemyController>();
+        hitSound = GetComponent<AudioSource>();
         
         health = maxHealth;
         
         RagdollOnStart();
-    }
-
-    private void Update()
-    {
-        if (health <= 0 && !_enemyController.isDead)
-        {
-            Debug.Log("Zombie Dead");
-            gm.score++;
-            _enemyController.isDead = true;
-            _animator.enabled = false;
-            
-            MakePhysical();
-            Destroy(gameObject, timeToDestroy);
-        }
     }
 
     void RagdollOnStart()
@@ -56,6 +45,22 @@ public class EnemyHealthSystem : MonoBehaviour
         for(int i = 0; i < ragdollRigidbodies.Length; i++)
         {
             ragdollRigidbodies[i].isKinematic = false;
+        }
+    }
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+
+        if (health <= 0 && !_enemyController.isDead)
+        {
+            Debug.Log("Zombie Dead");
+            gm.score++;
+            hitSound.Play();
+            _enemyController.isDead = true;
+            _animator.enabled = false;
+            
+            MakePhysical();
+            Destroy(gameObject, timeToDestroy);
         }
     }
 }

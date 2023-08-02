@@ -283,8 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b5e895c52dcbe46a42d442cd376436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.5
-  damage: 30
+  speed: 2
   hitVFX: {fileID: 4021103657954561961, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
   hitBlood: {fileID: 1968586304485042, guid: 6c86c599d7bf3464eb4506d2584fbe57, type: 3}
   target: {x: 0, y: 0, z: 0}

@@ -7,18 +7,29 @@ public class SpawnManager : MonoBehaviour
     public GameObject zombiePrefab;
     public Transform[] spawnPoints;
     public float spawnTime;
+    private PlayerHealthSystem _playerHealthSystem;
+    public bool canSpawn = true;
     
     // Start is called before the first frame update
     void Start()
     {
+        GameObject player = GameObject.FindWithTag("Player");
+        _playerHealthSystem = player.GetComponent<PlayerHealthSystem>();
         SpawnZombie();
         StartCoroutine(SpawnZombieRoutine());
+        _playerHealthSystem.playerDeathEvent.AddListener(StopSpawning);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+    
+    void StopSpawning()
+    {
+        StopCoroutine(SpawnZombieRoutine());
+        canSpawn = false;
     }
     
     void SpawnZombie()
@@ -32,6 +43,10 @@ public class SpawnManager : MonoBehaviour
     {
         yield return new WaitForSeconds(spawnTime);
         SpawnZombie();
-        StartCoroutine(SpawnZombieRoutine());
+
+        if (canSpawn)
+        {
+            StartCoroutine(SpawnZombieRoutine());
+        }
     }
 }

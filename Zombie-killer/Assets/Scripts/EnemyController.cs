@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
 {
     private NavMeshAgent _navMeshAgent;
     private Transform _player;
+    public float damage;
     private PlayerHealthSystem _playerHealth;
     private Vector3 target;
     private bool playerInAttackRange;
@@ -28,6 +29,7 @@ public class EnemyController : MonoBehaviour
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _enemyHealth.onDeath.AddListener(ZombieDeath);
+        _playerHealth.playerDeathEvent.AddListener(PlayerDeath);
         
         StartCoroutine(UpdateForTarget());
     }
@@ -58,11 +60,19 @@ public class EnemyController : MonoBehaviour
         {
             target = transform.position;
         }
+        
+        
     }
 
     void ZombieDeath()
     {
         isDead = true;
+    }
+
+    void PlayerDeath()
+    {
+        isDead = true;
+        _animator.SetTrigger("PlayerDead");
     }
     
     private void ChasingPlayer()
@@ -74,7 +84,7 @@ public class EnemyController : MonoBehaviour
     void AttackPlayer()
     {
         Debug.Log("Attack");
-        _playerHealth.health -= 10;
+        _playerHealth.TakeDamage(damage);
         alreadyAttacked = true;
         Invoke(nameof(ResetAttack), attackCooldown);
     }

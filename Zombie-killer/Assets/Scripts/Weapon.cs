@@ -7,8 +7,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public Transform shootingPoint;
-    public ParticleSystem particle;
-    
+
     [Header("Bullets")]
     public float bullets;
     public float bulletsMax;
