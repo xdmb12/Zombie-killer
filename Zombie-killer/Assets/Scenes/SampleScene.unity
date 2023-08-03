@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: aadbd4523b02ede468a9edd2e1ec260f,
+    type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -4615,8 +4616,9 @@ Transform:
   m_Children:
   - {fileID: 1988623087}
   - {fileID: 258233515}
+  - {fileID: 832575519}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 2.61, y: 91.7, z: 0.002}
 --- !u!114 &330585547
 MonoBehaviour:
@@ -5519,7 +5521,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 75.159, y: -5.622, z: 20.29}
 --- !u!114 &410087042
 MonoBehaviour:
@@ -9017,7 +9019,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000091552734}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &739835938
@@ -10421,13 +10423,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 832575517}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -9.102, y: -2.039, z: 20.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 330585546}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &835587799
 PrefabInstance:
@@ -10734,7 +10736,6 @@ MonoBehaviour:
   - {fileID: 786859908}
   - {fileID: 291811789}
   spawnTime: 1
-  canSpawn: 1
 --- !u!4 &843556812
 Transform:
   m_ObjectHideFlags: 0
@@ -10749,7 +10750,7 @@ Transform:
   m_Children:
   - {fileID: 2000797503}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &844601647
 PrefabInstance:
@@ -43162,7 +43163,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 65.25708, y: 45.00003}
+  m_AnchoredPosition: {x: 65.25708, y: 67}
   m_SizeDelta: {x: 483.48608, y: 50}
   m_Pivot: {x: 0, y: 0}
 --- !u!1001 &3182071397591064722
@@ -43870,7 +43871,7 @@ Transform:
   - {fileID: 4679948764375640}
   - {fileID: 8338988567045963317}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3934028541685127562
 PrefabInstance:
@@ -45946,7 +45947,7 @@ GameObject:
   - component: {fileID: 350394497567950696}
   - component: {fileID: 9128284825868905325}
   m_Layer: 5
-  m_Name: Popup
+  m_Name: PauseMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48789,16 +48790,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimVirtualCamera: {fileID: 515990142}
+  aimConstraint: {fileID: 4507133226461533}
   aimColliderLayerMask:
     serializedVersion: 2
     m_Bits: 385
+  weapon: {fileID: 2944691591534086592}
   bulletPrefab: {fileID: 8181936417298409739, guid: 52bd624d3a5de0040a723864a63128f6,
     type: 3}
   target: {fileID: 1988623087}
-  weapon: {fileID: 2944691591534086592}
-  aimConstraint: {fileID: 4507133226461533}
-  weaponCanvas: {fileID: 1315034629}
   bulletsText: {fileID: 1327959236}
+  weaponCanvas: {fileID: 1315034629}
   reloadingSlide: {fileID: 1694028425}
   shootSound: {fileID: 8300000, guid: e97f67fba4de6f345890ec01a9be50ee, type: 3}
   reloadSound: {fileID: 1139036443}
@@ -48831,14 +48832,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b597f1fe11535004082d778c8521ccc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
   maxHealth: 100
+  health: 100
   playerHitEvent:
     m_PersistentCalls:
       m_Calls: []
   playerDeathEvent:
     m_PersistentCalls:
       m_Calls: []
+  takeDamage: {fileID: 0}
   deathSound: {fileID: 8300000, guid: 0c11dd04abdcbde499a728be8387ee6c, type: 3}
   deathAudioVolume: 0.5
   ragdollRigidbodies:

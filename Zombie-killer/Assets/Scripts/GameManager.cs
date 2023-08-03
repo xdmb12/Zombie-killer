@@ -8,28 +8,40 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [HideInInspector ]public int score;
+    [Header("Score")]
+    [HideInInspector] public int score;
     [SerializeField] private TMP_Text scoreText;
-    public Slider _playerHP;
-    public TMP_Text timerText;
-    private PlayerHealthSystem _playerHealthSystem;
+    
+    [Header("HP Slider")]
+    [SerializeField] private Slider _playerHP;
+    
+    [Header("Timer")]
+    [SerializeField] private TMP_Text timerText;
     private float currentTime;
     
     [Header("Pause menu")]
-    public GameObject pauseMenu;
-    public TMP_Text pauseScoreText;
-    public TMP_Text pauseTimerText;
-    public static bool isPaused;
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private TMP_Text pauseScoreText;
+    [SerializeField] private TMP_Text pauseTimerText;
+    private bool isPaused;
+    
+    // Components
+    private PlayerHealthSystem _playerHealthSystem;
 
 
     private void Start()
     {
+        // Find the player and get the PlayerHealthSystem component
         GameObject player = GameObject.FindWithTag("Player");
         _playerHealthSystem = player.GetComponent<PlayerHealthSystem>();
+        
+        // Subscribe to events
         _playerHealthSystem.playerHitEvent.AddListener(ShowPlayerHP);
         _playerHealthSystem.playerDeathEvent.AddListener(PauseGame);
+        
         pauseMenu.SetActive(false);
         
+        // Lock the cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -38,9 +50,11 @@ public class GameManager : MonoBehaviour
     {
         ShowKillText();
         
+        // Update the timer
         currentTime += Time.deltaTime;
         UpdateTimerText();
         
+        // Pause the game
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
@@ -72,7 +86,7 @@ public class GameManager : MonoBehaviour
         timerText.text = timeString;
     }
     
-    public void PauseGame()
+    private void PauseGame()
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
@@ -88,7 +102,7 @@ public class GameManager : MonoBehaviour
         _playerHP.gameObject.SetActive(false);
     }
 
-    void ResumeGame()
+    private void ResumeGame()
     {
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;

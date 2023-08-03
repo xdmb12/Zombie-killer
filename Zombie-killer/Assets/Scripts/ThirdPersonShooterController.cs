@@ -12,24 +12,33 @@ using Image = UnityEngine.UI.Image;
 
 public class ThirdPersonShooterController : MonoBehaviour
 {
+    [Header("Camera")]
     [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
-    private StarterAssetsInputs _starterAssetsInputs;
-    public LayerMask aimColliderLayerMask;
-    [SerializeField] private GameObject bulletPrefab;
-    public Transform target;
-    private GameObject _bullet;
+    [SerializeField] private AimConstraint aimConstraint;
     private float cameraRotationY;
-    private Vector3 mouseWorldPosition;
-    public Weapon weapon;
-    public AimConstraint aimConstraint;
-    private bool isReloading;
-    public Canvas weaponCanvas;
+    
+    [Header("Weapon")]
+    [SerializeField] private LayerMask aimColliderLayerMask;
+    [SerializeField] private Weapon weapon;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform target;
+    
+    [Header("UI")]
     public TMP_Text bulletsText;
+    public Canvas weaponCanvas;
     public Image reloadingSlide;
+    
+    [Header("Audio")]
+    [SerializeField] private AudioClip shootSound;
+    [SerializeField] private AudioSource reloadSound;
+    [SerializeField] [Range(0, 1)] private float weaponAudioVolume;
+    
+    private StarterAssetsInputs _starterAssetsInputs;
+    
+    private Vector3 mouseWorldPosition;
     private Transform hitTransform;
-    public AudioClip shootSound;
-    public AudioSource reloadSound;
-    [Range(0, 1)] public float weaponAudioVolume;
+    private GameObject _bullet;
+    private bool isReloading;
 
     private void Awake()
     {
@@ -64,8 +73,8 @@ public class ThirdPersonShooterController : MonoBehaviour
         
         if(_starterAssetsInputs.reload)
         {
-            ReloadingStartForShootingWeapon();
             _starterAssetsInputs.reload = false;
+            ReloadingStartForShootingWeapon();
         }
 
         WeaponCanvas();
@@ -82,8 +91,7 @@ public class ThirdPersonShooterController : MonoBehaviour
         bulletsText.enabled = !isReloading;
         reloadingSlide.enabled = isReloading;
     }
-
-
+    
     private void ScreenCenterAiming()
     {
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);

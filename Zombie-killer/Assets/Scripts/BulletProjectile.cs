@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class BulletProjectile : MonoBehaviour
 {
-    public float speed;
+    [Header("Bullet Settings")]
+    [SerializeField] private float speed;
 
-    public GameObject hitVFX;
-    public GameObject hitBlood;
-    public Vector3 target;
+    [Header("Bullet VFX")]
+    [SerializeField] private GameObject hitVFX;
+    [SerializeField] private GameObject hitBlood;
+    [HideInInspector] public Vector3 target;
     
     private void FixedUpdate()
     {

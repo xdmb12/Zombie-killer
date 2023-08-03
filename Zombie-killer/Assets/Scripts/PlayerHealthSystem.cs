@@ -6,17 +6,24 @@ using UnityEngine.Events;
 
 public class PlayerHealthSystem : MonoBehaviour
 {
+    [Header("Health")]
+    [SerializeField] private float maxHealth;
     public float health;
-    public float maxHealth;
+    
+    [Header("Events")]
     public UnityEvent playerHitEvent;
     public UnityEvent playerDeathEvent;
-    private AudioSource takeDamage;
-    public AudioClip deathSound;
-    [Range(0, 1)] public float deathAudioVolume = 0.5f;
     
-    public Rigidbody[] ragdollRigidbodies;
-    public float invokeDelay = 1f;
+    [Header("Audio")]
+    [SerializeField] private AudioSource takeDamage;
+    [SerializeField] private AudioClip deathSound;
+    [Range(0, 1)] [SerializeField] private float deathAudioVolume = 0.5f;
     
+    [Header("Ragdoll")]
+    [SerializeField] private Rigidbody[] ragdollRigidbodies;
+    [SerializeField] private float invokeDelay = 1f;
+    
+    // Components
     private ThirdPersonController _thirdPersonController;
     private ThirdPersonShooterController _thirdPersonShooterController;
     private Animator _animator;
@@ -24,20 +31,22 @@ public class PlayerHealthSystem : MonoBehaviour
 
     private void Start()
     {
+        // Get the components
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _thirdPersonShooterController = GetComponent<ThirdPersonShooterController>();
         _thirdPersonController = GetComponent<ThirdPersonController>();
         takeDamage = GetComponent<AudioSource>();
-        RagdollOnStart();
+        
         health = maxHealth;
+        
+        RagdollOnStart();
     }
     
     void PlayerDeath()
     {
         if (health < 20)
         {
-            Debug.Log("Dead");
             StartCoroutine(DelayedInvokePlayerDeathEvent());
             AudioSource.PlayClipAtPoint(deathSound, transform.position, deathAudioVolume);
             
@@ -55,10 +64,11 @@ public class PlayerHealthSystem : MonoBehaviour
         health -= damage;
         playerHitEvent.Invoke();
         takeDamage.Play();
+        
         PlayerDeath();
     }
     
-    void RagdollOnStart()
+    private void RagdollOnStart()
     {
         for(int i = 0; i < ragdollRigidbodies.Length; i++)
         {
@@ -66,7 +76,7 @@ public class PlayerHealthSystem : MonoBehaviour
         }
     }
     
-    public void MakePhysical()
+    private void MakePhysical()
     {
         for(int i = 0; i < ragdollRigidbodies.Length; i++)
         {

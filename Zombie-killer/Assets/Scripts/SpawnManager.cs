@@ -4,27 +4,29 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public GameObject zombiePrefab;
-    public Transform[] spawnPoints;
-    public float spawnTime;
+    [Header("Zombie Prefab")]
+    [SerializeField] private GameObject zombiePrefab;
+    
+    [Header("Spawn Points")]
+    [SerializeField] private Transform[] spawnPoints;
+    [SerializeField] private float spawnTime;
+    
+    // Private Variables
     private PlayerHealthSystem _playerHealthSystem;
-    public bool canSpawn = true;
+    private bool canSpawn = true;
     
     // Start is called before the first frame update
     void Start()
     {
         GameObject player = GameObject.FindWithTag("Player");
         _playerHealthSystem = player.GetComponent<PlayerHealthSystem>();
+        
         SpawnZombie();
         StartCoroutine(SpawnZombieRoutine());
+        
         _playerHealthSystem.playerDeathEvent.AddListener(StopSpawning);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
     
     void StopSpawning()
     {
