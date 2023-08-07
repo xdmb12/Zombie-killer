@@ -8,6 +8,7 @@ TagManager:
   - FxTemporaire
   - Enemy
   - Bullet
+  - SpawnManager
   layers:
   - Default
   - TransparentFX

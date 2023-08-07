@@ -8467,6 +8467,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 5153408706199179752}
   pauseScoreText: {fileID: 613698297}
   pauseTimerText: {fileID: 1134502275}
+  spawnManager: {fileID: 843556811}
 --- !u!4 &707711103
 Transform:
   m_ObjectHideFlags: 0
@@ -10711,7 +10712,7 @@ GameObject:
   - component: {fileID: 843556811}
   m_Layer: 0
   m_Name: SpawnManager
-  m_TagString: Untagged
+  m_TagString: SpawnManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10730,6 +10731,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zombiePrefab: {fileID: 4478915365838858251, guid: be05b7e5455263c499858ab81383248b,
     type: 3}
+  currentZombieCount: 0
+  zombieCountMax: 150
   spawnPoints:
   - {fileID: 1510377575}
   - {fileID: 1251731298}

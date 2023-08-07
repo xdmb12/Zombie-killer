@@ -25,7 +25,7 @@ public class EnemyHealthSystem : MonoBehaviour
     {
         GameObject gameController = GameObject.FindWithTag("GameController");
         gm = gameController.GetComponent<GameManager>();
-        
+
         _animator = GetComponent<Animator>();
         _enemyController = GetComponent<EnemyController>();
         hitSound = GetComponent<AudioSource>();
@@ -57,6 +57,10 @@ public class EnemyHealthSystem : MonoBehaviour
         if (health <= 0 && !_enemyController.isDead)
         {
             gm.score++;
+            
+            int zombieCount = -1;
+            gm.spawnManager.ZombieCounter(zombieCount);
+            
             hitSound.Play();
             
             _enemyController.isDead = true;

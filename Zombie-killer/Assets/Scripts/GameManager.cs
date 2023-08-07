@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     private bool isPaused;
     
     // Components
+    public SpawnManager spawnManager;
     private PlayerHealthSystem _playerHealthSystem;
 
 

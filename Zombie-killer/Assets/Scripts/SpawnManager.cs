@@ -6,6 +6,9 @@ public class SpawnManager : MonoBehaviour
 {
     [Header("Zombie Prefab")]
     [SerializeField] private GameObject zombiePrefab;
+    [SerializeField] private int currentZombieCount;
+    [SerializeField] private int zombieCountMax;
+    
     
     [Header("Spawn Points")]
     [SerializeField] private Transform[] spawnPoints;
@@ -14,6 +17,7 @@ public class SpawnManager : MonoBehaviour
     // Private Variables
     private PlayerHealthSystem _playerHealthSystem;
     private bool canSpawn = true;
+    private bool zombieLimited = false;
     
     // Start is called before the first frame update
     void Start()
@@ -25,6 +29,13 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnZombieRoutine());
         
         _playerHealthSystem.playerDeathEvent.AddListener(StopSpawning);
+    }
+    
+    public void ZombieCounter(int zombieCount)
+    {
+        currentZombieCount += zombieCount;
+
+        zombieLimited = currentZombieCount < zombieCountMax;
     }
     
     
@@ -39,12 +50,19 @@ public class SpawnManager : MonoBehaviour
         int randomIndex = Random.Range(0, spawnPoints.Length);
         Transform spawnPoint = spawnPoints[randomIndex];
         Instantiate(zombiePrefab, spawnPoint.position, Quaternion.identity, gameObject.transform);
+        
+        int spawnedZombieCount = 1;
+        ZombieCounter(spawnedZombieCount);
     }
     
     IEnumerator SpawnZombieRoutine()
     {
         yield return new WaitForSeconds(spawnTime);
-        SpawnZombie();
+        
+        if(zombieLimited)
+        {
+            SpawnZombie();
+        }
 
         if (canSpawn)
         {
